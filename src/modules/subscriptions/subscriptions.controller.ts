@@ -1,8 +1,10 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete, Patch, UseGuards, Req } from '@nestjs/common';
 import { SubscriptionsService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('api/subscriptions')
 export class SubscriptionsController {
   constructor(private readonly subscriptionsService: SubscriptionsService) {}
@@ -10,6 +12,11 @@ export class SubscriptionsController {
   @Get()
   async getAllSubscriptions() {
     return this.subscriptionsService.getAllSubscriptions();
+  }
+
+  @Get('me')
+  getMySubscriptions(@Req() req) {
+    return this.subscriptionsService.getByUser(req.user.id);
   }
 
   @Get(':id')
@@ -30,8 +37,8 @@ export class SubscriptionsController {
     return this.subscriptionsService.updateSubscription(id, updateSubscriptionDto);
   }
 
-  @Delete(':id')
-  async deleteSubscription(@Param('id') id: string) {
-    return this.subscriptionsService.deleteSubscription(id);
+  @Patch(':id/cancel')
+  async cancelSubscription(@Param('id') id: string) {
+    return this.subscriptionsService.cancelSubscription(id);
   }
 }

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubscriptionsService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../../prisma/prisma.service");
+const client_1 = require("@prisma/client");
 let SubscriptionsService = class SubscriptionsService {
     prisma;
     constructor(prisma) {
@@ -19,6 +20,9 @@ let SubscriptionsService = class SubscriptionsService {
     }
     async getAllSubscriptions() {
         return this.prisma.subscription.findMany({
+            where: {
+                cancelledAt: null,
+            },
             include: {
                 user: true,
                 event: true,
@@ -57,8 +61,17 @@ let SubscriptionsService = class SubscriptionsService {
                 },
             },
         });
-        if (existing && existing.status === 'ACTIVE')
-            throw new common_1.BadRequestException('Already subscribed');
+        if (existing) {
+            if (existing.status === 'ACTIVE')
+                throw new common_1.BadRequestException('Already subscribed');
+            return this.prisma.subscription.update({
+                where: { id: existing.id },
+                data: {
+                    status: 'ACTIVE',
+                    cancelledAt: null,
+                },
+            });
+        }
         return this.prisma.subscription.create({
             data: {
                 userId: dto.userId,
@@ -77,16 +90,31 @@ let SubscriptionsService = class SubscriptionsService {
             data: dto,
         });
     }
-    async deleteSubscription(id) {
+    async getByUser(userId) {
+        return this.prisma.subscription.findMany({
+            where: {
+                userId,
+                cancelledAt: null,
+            },
+            include: {
+                event: true,
+            },
+        });
+    }
+    async cancelSubscription(id) {
         const sub = await this.prisma.subscription.findUnique({
             where: { id },
         });
-        if (!sub)
+        if (!sub) {
             throw new common_1.NotFoundException('Subscription not found');
+        }
+        if (sub.status === client_1.SubscriptionStatus.CANCELLED) {
+            throw new common_1.BadRequestException('Subscription already cancelled');
+        }
         return this.prisma.subscription.update({
             where: { id },
             data: {
-                status: 'CANCELLED',
+                status: client_1.SubscriptionStatus.CANCELLED,
                 cancelledAt: new Date(),
             },
         });

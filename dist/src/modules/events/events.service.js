@@ -88,21 +88,6 @@ let EventsService = class EventsService {
             throw new common_1.BadRequestException('Already subscribed');
         }
     }
-    async unsubscribe(eventId, userId) {
-        const sub = await this.prisma.subscription.findFirst({
-            where: { eventId, userId },
-        });
-        if (!sub)
-            throw new common_1.NotFoundException('Subscription not found');
-        await this.prisma.subscription.update({
-            where: { id: sub.id },
-            data: {
-                status: 'CANCELLED',
-                cancelledAt: new Date(),
-            },
-        });
-        return { message: 'Unsubscribed successfully' };
-    }
     async getUserEvents(userId) {
         const now = new Date();
         const subs = await this.prisma.subscription.findMany({

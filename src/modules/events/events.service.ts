@@ -98,25 +98,6 @@ export class EventsService {
     }
   }
 
-  // DESINSCREVER
-  async unsubscribe(eventId: string, userId: string) {
-    const sub = await this.prisma.subscription.findFirst({
-      where: { eventId, userId },
-    });
-
-    if (!sub) throw new NotFoundException('Subscription not found');
-
-    await this.prisma.subscription.update({
-      where: { id: sub.id },
-      data: {
-        status: 'CANCELLED',
-        cancelledAt: new Date(),
-      },
-    });
-
-    return { message: 'Unsubscribed successfully' };
-  }
-
   // EVENTOS DO USUÁRIO
   async getUserEvents(userId: string) {
     const now = new Date();

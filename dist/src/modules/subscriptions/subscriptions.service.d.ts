@@ -6,92 +6,115 @@ export declare class SubscriptionsService {
     constructor(prisma: PrismaService);
     getAllSubscriptions(): Promise<({
         user: {
-            email: string;
-            city: string;
-            name: string;
             id: string;
-            passwordHash: string;
-            role: import(".prisma/client").$Enums.UserRole;
             createdAt: Date;
+            name: string;
+            email: string;
+            passwordHash: string;
+            city: string;
+            role: import(".prisma/client").$Enums.UserRole;
             updatedAt: Date;
         };
         event: {
-            city: string;
-            description: string;
-            title: string;
             id: string;
             createdAt: Date;
+            city: string;
             updatedAt: Date;
-            category: import(".prisma/client").$Enums.EventCategory;
+            title: string;
+            description: string;
+            imageUrl: string | null;
             startDate: Date;
             endDate: Date;
-            imageUrl: string | null;
             location: string;
+            category: import(".prisma/client").$Enums.EventCategory;
             maxCapacity: number;
         };
     } & {
         id: string;
-        createdAt: Date;
-        status: import(".prisma/client").$Enums.SubscriptionStatus;
-        cancelledAt: Date | null;
         userId: string;
         eventId: string;
+        status: import(".prisma/client").$Enums.SubscriptionStatus;
+        createdAt: Date;
+        cancelledAt: Date | null;
     })[]>;
     getSubscriptionById(id: string): Promise<{
         user: {
-            email: string;
-            city: string;
-            name: string;
             id: string;
-            passwordHash: string;
-            role: import(".prisma/client").$Enums.UserRole;
             createdAt: Date;
+            name: string;
+            email: string;
+            passwordHash: string;
+            city: string;
+            role: import(".prisma/client").$Enums.UserRole;
             updatedAt: Date;
         };
         event: {
-            city: string;
-            description: string;
-            title: string;
             id: string;
             createdAt: Date;
+            city: string;
             updatedAt: Date;
-            category: import(".prisma/client").$Enums.EventCategory;
+            title: string;
+            description: string;
+            imageUrl: string | null;
             startDate: Date;
             endDate: Date;
-            imageUrl: string | null;
             location: string;
+            category: import(".prisma/client").$Enums.EventCategory;
             maxCapacity: number;
         };
     } & {
         id: string;
-        createdAt: Date;
-        status: import(".prisma/client").$Enums.SubscriptionStatus;
-        cancelledAt: Date | null;
         userId: string;
         eventId: string;
+        status: import(".prisma/client").$Enums.SubscriptionStatus;
+        createdAt: Date;
+        cancelledAt: Date | null;
     }>;
     createSubscription(dto: CreateSubscriptionDto): Promise<{
         id: string;
-        createdAt: Date;
-        status: import(".prisma/client").$Enums.SubscriptionStatus;
-        cancelledAt: Date | null;
         userId: string;
         eventId: string;
+        status: import(".prisma/client").$Enums.SubscriptionStatus;
+        createdAt: Date;
+        cancelledAt: Date | null;
     }>;
     updateSubscription(id: string, dto: UpdateSubscriptionDto): Promise<{
         id: string;
-        createdAt: Date;
-        status: import(".prisma/client").$Enums.SubscriptionStatus;
-        cancelledAt: Date | null;
         userId: string;
         eventId: string;
+        status: import(".prisma/client").$Enums.SubscriptionStatus;
+        createdAt: Date;
+        cancelledAt: Date | null;
     }>;
-    deleteSubscription(id: string): Promise<{
+    getByUser(userId: string): Promise<({
+        event: {
+            id: string;
+            createdAt: Date;
+            city: string;
+            updatedAt: Date;
+            title: string;
+            description: string;
+            imageUrl: string | null;
+            startDate: Date;
+            endDate: Date;
+            location: string;
+            category: import(".prisma/client").$Enums.EventCategory;
+            maxCapacity: number;
+        };
+    } & {
         id: string;
-        createdAt: Date;
-        status: import(".prisma/client").$Enums.SubscriptionStatus;
-        cancelledAt: Date | null;
         userId: string;
         eventId: string;
+        status: import(".prisma/client").$Enums.SubscriptionStatus;
+        createdAt: Date;
+        cancelledAt: Date | null;
+    })[]>;
+    cancelSubscription(id: string): Promise<{
+        id: string;
+        userId: string;
+        eventId: string;
+        status: import(".prisma/client").$Enums.SubscriptionStatus;
+        createdAt: Date;
+        cancelledAt: Date | null;
     }>;
 }

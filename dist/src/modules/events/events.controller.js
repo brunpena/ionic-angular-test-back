@@ -32,9 +32,6 @@ let EventsController = class EventsController {
     async subscribe(id, req) {
         return this.eventsService.subscribe(id, req.user.id);
     }
-    async unsubscribe(id, req) {
-        return this.eventsService.unsubscribe(id, req.user.id);
-    }
     async getUserEvents(req) {
         return this.eventsService.getUserEvents(req.user.id);
     }
@@ -59,7 +56,6 @@ __decorate([
 ], EventsController.prototype, "getEvent", null);
 __decorate([
     (0, common_1.Post)(':id/subscribe'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -67,17 +63,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsController.prototype, "subscribe", null);
 __decorate([
-    (0, common_1.Delete)(':id/subscribe'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Req)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Promise)
-], EventsController.prototype, "unsubscribe", null);
-__decorate([
     (0, common_1.Get)('me/events'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -85,7 +71,6 @@ __decorate([
 ], EventsController.prototype, "getUserEvents", null);
 __decorate([
     (0, common_1.Post)(':id/image'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -93,6 +78,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EventsController.prototype, "uploadImage", null);
 exports.EventsController = EventsController = __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('api/events'),
     __metadata("design:paramtypes", [events_service_1.EventsService])
 ], EventsController);

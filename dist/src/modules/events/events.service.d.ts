@@ -4,71 +4,68 @@ export declare class EventsService {
     constructor(prisma: PrismaService);
     listEvents(query: any): Promise<{
         data: {
-            city: string;
-            description: string;
-            title: string;
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            category: import(".prisma/client").$Enums.EventCategory;
+            title: string;
+            description: string;
+            imageUrl: string | null;
             startDate: Date;
             endDate: Date;
-            imageUrl: string | null;
             location: string;
+            city: string;
+            category: import(".prisma/client").$Enums.EventCategory;
             maxCapacity: number;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
         total: number;
         page: number;
         limit: number;
     }>;
     getEventById(eventId: string): Promise<{
-        city: string;
-        description: string;
-        title: string;
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        category: import(".prisma/client").$Enums.EventCategory;
+        title: string;
+        description: string;
+        imageUrl: string | null;
         startDate: Date;
         endDate: Date;
-        imageUrl: string | null;
         location: string;
+        city: string;
+        category: import(".prisma/client").$Enums.EventCategory;
         maxCapacity: number;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     subscribe(eventId: string, userId: string): Promise<{
         message: string;
     }>;
-    unsubscribe(eventId: string, userId: string): Promise<{
-        message: string;
-    }>;
     getUserEvents(userId: string): Promise<{
         upcoming: {
-            city: string;
-            description: string;
-            title: string;
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            category: import(".prisma/client").$Enums.EventCategory;
+            title: string;
+            description: string;
+            imageUrl: string | null;
             startDate: Date;
             endDate: Date;
-            imageUrl: string | null;
             location: string;
+            city: string;
+            category: import(".prisma/client").$Enums.EventCategory;
             maxCapacity: number;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
         past: {
-            city: string;
-            description: string;
-            title: string;
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            category: import(".prisma/client").$Enums.EventCategory;
+            title: string;
+            description: string;
+            imageUrl: string | null;
             startDate: Date;
             endDate: Date;
-            imageUrl: string | null;
             location: string;
+            city: string;
+            category: import(".prisma/client").$Enums.EventCategory;
             maxCapacity: number;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
     }>;
     uploadImage(eventId: string, imageBase64: string): Promise<{

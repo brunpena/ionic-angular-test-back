@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const subscriptions_service_1 = require("./subscriptions.service");
 const create_subscription_dto_1 = require("./dto/create-subscription.dto");
 const update_subscription_dto_1 = require("./dto/update-subscription.dto");
+const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 let SubscriptionsController = class SubscriptionsController {
     subscriptionsService;
     constructor(subscriptionsService) {
@@ -24,6 +25,9 @@ let SubscriptionsController = class SubscriptionsController {
     }
     async getAllSubscriptions() {
         return this.subscriptionsService.getAllSubscriptions();
+    }
+    getMySubscriptions(req) {
+        return this.subscriptionsService.getByUser(req.user.id);
     }
     async getSubscriptionById(id) {
         return this.subscriptionsService.getSubscriptionById(id);
@@ -34,8 +38,8 @@ let SubscriptionsController = class SubscriptionsController {
     async updateSubscription(id, updateSubscriptionDto) {
         return this.subscriptionsService.updateSubscription(id, updateSubscriptionDto);
     }
-    async deleteSubscription(id) {
-        return this.subscriptionsService.deleteSubscription(id);
+    async cancelSubscription(id) {
+        return this.subscriptionsService.cancelSubscription(id);
     }
 };
 exports.SubscriptionsController = SubscriptionsController;
@@ -45,6 +49,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SubscriptionsController.prototype, "getAllSubscriptions", null);
+__decorate([
+    (0, common_1.Get)('me'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], SubscriptionsController.prototype, "getMySubscriptions", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -68,13 +79,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SubscriptionsController.prototype, "updateSubscription", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Patch)(':id/cancel'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], SubscriptionsController.prototype, "deleteSubscription", null);
+], SubscriptionsController.prototype, "cancelSubscription", null);
 exports.SubscriptionsController = SubscriptionsController = __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('api/subscriptions'),
     __metadata("design:paramtypes", [subscriptions_service_1.SubscriptionsService])
 ], SubscriptionsController);

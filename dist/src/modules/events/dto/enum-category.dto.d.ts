@@ -1,0 +1,11 @@
+export declare enum EventCategoryDto {
+    TECNOLOGIA = "TECNOLOGIA",
+    AGRONEGOCIO = "AGRONEGOCIO",
+    MODA = "MODA",
+    ARTE = "ARTE",
+    NEGOCIOS = "NEGOCIOS",
+    EDUCACAO = "EDUCACAO",
+    SAUDE = "SAUDE",
+    ENTRETENIMENTO = "ENTRETENIMENTO",
+    OUTROS = "OUTROS"
+}

@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+////////////////////
+// ENUMS
+////////////////////
+enum UserRole {
+  user
+  admin
+}
+
+enum EventCategory {
+  TECNOLOGIA
+  AGRONEGOCIO
+  MODA
+  ARTE
+  NEGOCIOS
+  EDUCACAO
+  SAUDE
+  ENTRETENIMENTO
+  OUTROS
+}
+
+enum PushPlatform {
+  web
+  android
+  ios
+}
+
+enum JobName {
+  REMINDER_24H
+  NEW_EVENT_CITY
+  EVENT_80_PERCENT
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+}
+
+////////////////////
+// USER
+////////////////////
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  city         String
+  role         UserRole @default(user)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subscriptions Subscription[]
+  pushTokens    PushToken[]
+}
+
+////////////////////
+// EVENT
+////////////////////
+model Event {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  imageUrl    String?
+
+  startDate DateTime
+  endDate   DateTime
+
+  location String
+  city     String
+  category EventCategory
+
+  maxCapacity Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subscriptions Subscription[]
+
+  @@index([city])
+  @@index([category])
+  @@index([startDate, endDate])
+}
+
+////////////////////
+// SUBSCRIPTION
+////////////////////
+model Subscription {
+  id        String   @id @default(uuid())
+  userId   String
+  eventId  String
+  status   SubscriptionStatus @default(ACTIVE)
+
+  createdAt  DateTime @default(now())
+  cancelledAt DateTime?
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventId])
+  @@index([eventId])
+}
+
+////////////////////
+// PUSH TOKEN
+////////////////////
+model PushToken {
+  id       String       @id @default(uuid())
+  token    String
+  platform PushPlatform
+  userId   String
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, token])
+}
+
+////////////////////
+// JOB LOG
+////////////////////
+model JobLog {
+  id                String   @id @default(uuid())
+  jobName           JobName
+  referenceId       String?
+  executedAt        DateTime @default(now())
+  notificationsSent Int      @default(0)
+
+  @@unique([jobName, referenceId])
+}
+
+////////////////////
+// TOKEN BLACKLIST
+////////////////////
+model TokenBlacklist {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+}

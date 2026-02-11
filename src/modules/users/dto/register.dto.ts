@@ -19,7 +19,7 @@ export class RegisterDto {
   @ApiProperty()
   @IsString()
   @MinLength(6)
-  password: string
+  passwordHash: string
 
   @ApiProperty({
     example: 'São Paulo',

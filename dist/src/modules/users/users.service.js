@@ -20,10 +20,20 @@ let UsersService = class UsersService {
     findById(id) {
         return this.prisma.user.findUnique({ where: { id } });
     }
+    findByEmail(email) {
+        return this.prisma.user.findUnique({
+            where: { email },
+        });
+    }
     update(id, dto) {
         return this.prisma.user.update({
             where: { id },
             data: dto,
+        });
+    }
+    create(data) {
+        return this.prisma.user.create({
+            data,
         });
     }
 };

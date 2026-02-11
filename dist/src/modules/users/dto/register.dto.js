@@ -15,7 +15,7 @@ const class_validator_1 = require("class-validator");
 class RegisterDto {
     name;
     email;
-    password;
+    passwordHash;
     city;
 }
 exports.RegisterDto = RegisterDto;
@@ -35,7 +35,7 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(6),
     __metadata("design:type", String)
-], RegisterDto.prototype, "password", void 0);
+], RegisterDto.prototype, "passwordHash", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: 'São Paulo',

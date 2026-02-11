@@ -1,8 +1,11 @@
-import { Controller, Get, Patch, Body, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Patch, Body, UseGuards, Req, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
+  
 
 @UseGuards(JwtAuthGuard)
 @ApiTags('Users')
@@ -23,5 +26,12 @@ export class UsersController {
     @Body() dto: UpdateUserDto
   ) {
     return this.usersService.update(req.user.id, dto)
+  }
+
+  @Post()
+  create(
+    @Body() dto: RegisterDto
+  ) {
+    return this.usersService.create(dto)
   }
 } 

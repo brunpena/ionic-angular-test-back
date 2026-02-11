@@ -1,29 +1,94 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { UsersService } from 'src/modules/users/users.service';
 
 @Injectable()
 export class AuthService {
-  async register(registerDto: RegisterDto) {
-    // TODO: Implement registration logic with password hashing
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  // ======================
+  // REGISTER
+  // ======================
+  async register(dto: RegisterDto) {
+    const userExists = await this.usersService.findByEmail(dto.email);
+
+    if (userExists) {
+      throw new BadRequestException('Email já cadastrado');
+    }
+
+    const hashedPassword = await bcrypt.hash(dto.password, 10);
+
+    const user = await this.usersService.create({
+      name: dto.name,
+      email: dto.email,
+      passwordHash: hashedPassword,
+      city: dto.city,
+    });
+
+    const token = this.jwtService.sign({
+      sub: user.id,
+      email: user.email,
+    });
+
     return {
-      message: 'User registered successfully',
-      user: registerDto,
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        city: user.city,
+      },
     };
   }
 
-  async login(loginDto: LoginDto) {
-    // TODO: Implement login logic with JWT token generation
+  // ======================
+  // LOGIN
+  // ======================
+  async login(dto: LoginDto) {
+    const user = await this.usersService.findByEmail(dto.email);
+
+    if (!user) {
+      throw new UnauthorizedException('Email ou senha inválidos');
+    }
+
+    const passwordValid = await bcrypt.compare(dto.password, user.passwordHash);
+
+    if (!passwordValid) {
+      throw new UnauthorizedException('Email ou senha inválidos');
+    }
+
+    const token = this.jwtService.sign({
+      sub: user.id,
+      email: user.email,
+    });
+
     return {
-      message: 'Login successful',
-      token: 'jwt_token_here',
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        city: user.city,
+      },
     };
   }
 
-  async logout(userId: string) {
-    // TODO: Implement logout logic with token blacklist
-    return {
-      message: 'Logout successful',
-    };
+  // ======================
+  // LOGOUT
+  // ======================
+  async logout() {
+    // JWT é stateless → logout no front
+    return { message: 'Logout successful' };
   }
 }

@@ -10,10 +10,28 @@ export class UsersService {
     return this.prisma.user.findUnique({ where: { id } })
   }
 
+  findByEmail(email: string) {
+    return this.prisma.user.findUnique({
+      where: { email },
+    });
+  }
+
+
   update(id: string, dto: UpdateUserDto) {
     return this.prisma.user.update({
       where: { id },
       data: dto,
     })
+  }
+
+  create(data: {
+    name: string;
+    email: string;
+    passwordHash: string;
+    city: string;
+  }) {
+    return this.prisma.user.create({
+      data,
+    });
   }
 }

@@ -30,7 +30,7 @@ let AuthController = class AuthController {
         return this.authService.login(loginDto);
     }
     async logout(req) {
-        return this.authService.logout(req.user.id);
+        return this.authService.logout();
     }
 };
 exports.AuthController = AuthController;

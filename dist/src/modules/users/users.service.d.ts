@@ -5,8 +5,18 @@ export declare class UsersService {
     constructor(prisma: PrismaService);
     findById(id: string): import(".prisma/client").Prisma.Prisma__UserClient<{
         email: string;
-        city: string;
         name: string;
+        city: string;
+        id: string;
+        passwordHash: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        createdAt: Date;
+        updatedAt: Date;
+    } | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
+    findByEmail(email: string): import(".prisma/client").Prisma.Prisma__UserClient<{
+        email: string;
+        name: string;
+        city: string;
         id: string;
         passwordHash: string;
         role: import(".prisma/client").$Enums.UserRole;
@@ -15,8 +25,23 @@ export declare class UsersService {
     } | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: string, dto: UpdateUserDto): import(".prisma/client").Prisma.Prisma__UserClient<{
         email: string;
-        city: string;
         name: string;
+        city: string;
+        id: string;
+        passwordHash: string;
+        role: import(".prisma/client").$Enums.UserRole;
+        createdAt: Date;
+        updatedAt: Date;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    create(data: {
+        name: string;
+        email: string;
+        passwordHash: string;
+        city: string;
+    }): import(".prisma/client").Prisma.Prisma__UserClient<{
+        email: string;
+        name: string;
+        city: string;
         id: string;
         passwordHash: string;
         role: import(".prisma/client").$Enums.UserRole;

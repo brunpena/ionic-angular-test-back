@@ -18,7 +18,7 @@ const users_service_1 = require("./users.service");
 const update_user_dto_1 = require("./dto/update-user.dto");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 const swagger_1 = require("@nestjs/swagger");
-const register_dto_1 = require("./dto/register.dto");
+const usersRegister_dto_1 = require("./dto/usersRegister.dto");
 let UsersController = class UsersController {
     usersService;
     constructor(usersService) {
@@ -54,7 +54,7 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [register_dto_1.RegisterDto]),
+    __metadata("design:paramtypes", [usersRegister_dto_1.UserRegisterDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "create", null);
 exports.UsersController = UsersController = __decorate([

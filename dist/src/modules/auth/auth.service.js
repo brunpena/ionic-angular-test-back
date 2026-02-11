@@ -47,12 +47,15 @@ const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const bcrypt = __importStar(require("bcrypt"));
 const users_service_1 = require("../users/users.service");
+const token_black_list_service_1 = require("../tokenBlackList/token-black-list.service");
 let AuthService = class AuthService {
     usersService;
     jwtService;
-    constructor(usersService, jwtService) {
+    tokenBlacklistService;
+    constructor(usersService, jwtService, tokenBlacklistService) {
         this.usersService = usersService;
         this.jwtService = jwtService;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
     async register(dto) {
         const userExists = await this.usersService.findByEmail(dto.email);
@@ -72,12 +75,7 @@ let AuthService = class AuthService {
         });
         return {
             token,
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                city: user.city,
-            },
+            user,
         };
     }
     async login(dto) {
@@ -95,22 +93,23 @@ let AuthService = class AuthService {
         });
         return {
             token,
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                city: user.city,
-            },
+            user,
         };
     }
-    async logout() {
-        return { message: 'Logout successful' };
+    async logout(token) {
+        const decoded = this.jwtService.decode(token);
+        if (!decoded || !decoded.exp) {
+            throw new common_1.UnauthorizedException('Token inválido');
+        }
+        await this.tokenBlacklistService.add(token, new Date(decoded.exp * 1000));
+        return { success: true };
     }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [users_service_1.UsersService,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        token_black_list_service_1.TokenBlacklistService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

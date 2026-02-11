@@ -6,7 +6,7 @@ import {
   MaxLength,
 } from 'class-validator'
 
-export class RegisterDto {
+export class UserRegisterDto {
   @ApiProperty()
   @IsString()
   @MaxLength(120)

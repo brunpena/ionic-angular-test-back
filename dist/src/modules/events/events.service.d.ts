@@ -1,8 +1,9 @@
 import { PrismaService } from 'prisma/prisma.service';
+import { QueryEventsDto } from './dto/query-events.dto';
 export declare class EventsService {
     private prisma;
     constructor(prisma: PrismaService);
-    listEvents(query: any): Promise<{
+    listEvents(query: QueryEventsDto): Promise<{
         data: {
             city: string;
             description: string;

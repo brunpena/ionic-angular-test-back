@@ -10,11 +10,13 @@ exports.SubscriptionsModule = void 0;
 const common_1 = require("@nestjs/common");
 const subscriptions_service_1 = require("./subscriptions.service");
 const subscriptions_controller_1 = require("./subscriptions.controller");
+const token_black_list_module_1 = require("../tokenBlackList/token-black-list.module");
 let SubscriptionsModule = class SubscriptionsModule {
 };
 exports.SubscriptionsModule = SubscriptionsModule;
 exports.SubscriptionsModule = SubscriptionsModule = __decorate([
     (0, common_1.Module)({
+        imports: [token_black_list_module_1.TokenBlacklistModule,],
         controllers: [subscriptions_controller_1.SubscriptionsController],
         providers: [subscriptions_service_1.SubscriptionsService],
     })

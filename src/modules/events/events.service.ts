@@ -4,6 +4,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 import { QueryEventsDto } from './dto/query-events.dto';
 
 @Injectable()
@@ -11,7 +12,7 @@ export class EventsService {
   constructor(private prisma: PrismaService) {}
 
   // LISTAR EVENTOS
-  async listEvents(query: any) { // Altere QueryEventsDto para incluir search, startDate, endDate
+  async listEvents(query: QueryEventsDto) {
     const page = Number(query.page) || 1;
     const limit = Number(query.limit) || 10;
 
@@ -93,8 +94,11 @@ export class EventsService {
       });
 
       return { message: 'Subscribed successfully' };
-    } catch {
-      throw new BadRequestException('Already subscribed');
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+        throw new BadRequestException('Already subscribed');
+      }
+      throw error;
     }
   }
 

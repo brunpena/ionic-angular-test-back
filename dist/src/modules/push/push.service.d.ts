@@ -7,8 +7,8 @@ export declare class PushService {
     registerToken(userId: string, token: string, platform: 'web' | 'android' | 'ios'): Promise<{
         id: string;
         createdAt: Date;
-        userId: string;
         token: string;
+        userId: string;
         platform: import(".prisma/client").$Enums.PushPlatform;
     }>;
     sendToUser(userId: string, notification: {
@@ -16,4 +16,7 @@ export declare class PushService {
         body: string;
     }): Promise<void>;
     private send;
+    unregisterToken(userId: string, token: string): Promise<{
+        success: boolean;
+    }>;
 }

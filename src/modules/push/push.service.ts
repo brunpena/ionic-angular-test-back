@@ -42,7 +42,9 @@ export class PushService {
           token,
         },
       },
-      update: {},
+      update: {
+        platform,
+      },
       create: {
         userId,
         token,
@@ -50,6 +52,7 @@ export class PushService {
       },
     });
   }
+
 
   // ================================
   // Send push to ONE user
@@ -86,5 +89,17 @@ export class PushService {
     } catch (e) {
       this.logger.warn(`Push failed -> ${token}`);
     }
+  }
+
+  async unregisterToken(userId: string, token: string) {
+    await this.prisma.pushToken.deleteMany({
+      where: {
+        userId,
+        token,
+      },
+    });
+
+    this.logger.log(`Push token removed -> ${token}`);
+    return { success: true };
   }
 }

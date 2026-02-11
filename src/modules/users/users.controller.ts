@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { RegisterDto } from './dto/register.dto';
+import { UserRegisterDto } from './dto/usersRegister.dto';
 import { LoginDto } from './dto/login.dto';
   
 
@@ -30,7 +30,7 @@ export class UsersController {
 
   @Post()
   create(
-    @Body() dto: RegisterDto
+    @Body() dto: UserRegisterDto
   ) {
     return this.usersService.create(dto)
   }

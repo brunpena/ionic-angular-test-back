@@ -30,10 +30,10 @@ let EventsController = class EventsController {
         return this.eventsService.getEventById(id);
     }
     async subscribe(id, req) {
-        return this.eventsService.subscribe(id, req.user.id);
+        return this.eventsService.subscribe(id, req.user.sub);
     }
     async getUserEvents(req) {
-        return this.eventsService.getUserEvents(req.user.id);
+        return this.eventsService.getUserEvents(req.user.sub);
     }
     async uploadImage(id, uploadImageDto) {
         return this.eventsService.uploadImage(id, uploadImageDto.imageBase64);

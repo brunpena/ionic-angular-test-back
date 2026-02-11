@@ -9,33 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisterDto = void 0;
+exports.CreateTokenDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-class RegisterDto {
-    name;
-    email;
-    password;
-    city;
+class CreateTokenDto {
+    token;
+    expiresAt;
 }
-exports.RegisterDto = RegisterDto;
+exports.CreateTokenDto = CreateTokenDto;
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.MaxLength)(255),
+    (0, swagger_1.ApiProperty)({
+        example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+    }),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], RegisterDto.prototype, "name", void 0);
+], CreateTokenDto.prototype, "token", void 0);
 __decorate([
-    (0, class_validator_1.IsEmail)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({
+        example: '2026-02-12T10:00:00.000Z',
+    }),
+    (0, class_validator_1.IsDateString)(),
     __metadata("design:type", String)
-], RegisterDto.prototype, "email", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.MinLength)(6),
-    __metadata("design:type", String)
-], RegisterDto.prototype, "password", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.MaxLength)(255),
-    __metadata("design:type", String)
-], RegisterDto.prototype, "city", void 0);
-//# sourceMappingURL=register.dto.js.map
+], CreateTokenDto.prototype, "expiresAt", void 0);
+//# sourceMappingURL=create-token.dto.js.map

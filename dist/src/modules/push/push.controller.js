@@ -42,6 +42,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PushController.prototype, "register", null);
 exports.PushController = PushController = __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, swagger_1.ApiTags)('Push'),
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('push'),

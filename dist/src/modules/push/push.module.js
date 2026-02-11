@@ -10,11 +10,13 @@ exports.PushModule = void 0;
 const common_1 = require("@nestjs/common");
 const push_controller_1 = require("./push.controller");
 const push_service_1 = require("./push.service");
+const token_black_list_module_1 = require("../tokenBlackList/token-black-list.module");
 let PushModule = class PushModule {
 };
 exports.PushModule = PushModule;
 exports.PushModule = PushModule = __decorate([
     (0, common_1.Module)({
+        imports: [token_black_list_module_1.TokenBlacklistModule,],
         controllers: [push_controller_1.PushController],
         providers: [push_service_1.PushService],
         exports: [push_service_1.PushService],

@@ -21,12 +21,12 @@ export class EventsController {
 
   @Post(':id/subscribe')
   async subscribe(@Param('id') id: string, @Req() req: any) {
-    return this.eventsService.subscribe(id, req.user.id);
+    return this.eventsService.subscribe(id, req.user.sub);
   }
 
   @Get('me/events')
   async getUserEvents(@Req() req: any) {
-    return this.eventsService.getUserEvents(req.user.id);
+    return this.eventsService.getUserEvents(req.user.sub);
   }
 
   @Post(':id/image')

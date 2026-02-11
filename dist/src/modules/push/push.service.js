@@ -75,7 +75,9 @@ let PushService = PushService_1 = class PushService {
                     token,
                 },
             },
-            update: {},
+            update: {
+                platform,
+            },
             create: {
                 userId,
                 token,
@@ -104,6 +106,16 @@ let PushService = PushService_1 = class PushService {
         catch (e) {
             this.logger.warn(`Push failed -> ${token}`);
         }
+    }
+    async unregisterToken(userId, token) {
+        await this.prisma.pushToken.deleteMany({
+            where: {
+                userId,
+                token,
+            },
+        });
+        this.logger.log(`Push token removed -> ${token}`);
+        return { success: true };
     }
 };
 exports.PushService = PushService;

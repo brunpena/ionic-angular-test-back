@@ -9,8 +9,8 @@ export declare class PushController {
     register(req: any, dto: RegisterPushDto): Promise<{
         id: string;
         createdAt: Date;
-        userId: string;
         token: string;
+        userId: string;
         platform: import(".prisma/client").$Enums.PushPlatform;
     }>;
 }

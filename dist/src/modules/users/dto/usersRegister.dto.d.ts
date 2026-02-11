@@ -1,4 +1,4 @@
-export declare class RegisterDto {
+export declare class UserRegisterDto {
     name: string;
     email: string;
     passwordHash: string;

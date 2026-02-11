@@ -19,6 +19,7 @@ class RegisterPushDto {
   platform: 'web' | 'android' | 'ios';
 }
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Push')
 @ApiBearerAuth()
 @Controller('push')

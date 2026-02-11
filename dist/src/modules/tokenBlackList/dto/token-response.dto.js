@@ -9,38 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisterDto = void 0;
+exports.TokenStatusDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const class_validator_1 = require("class-validator");
-class RegisterDto {
-    name;
-    email;
-    passwordHash;
-    city;
+class TokenStatusDto {
+    token;
+    blacklisted;
 }
-exports.RegisterDto = RegisterDto;
+exports.TokenStatusDto = TokenStatusDto;
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MaxLength)(120),
     __metadata("design:type", String)
-], RegisterDto.prototype, "name", void 0);
+], TokenStatusDto.prototype, "token", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsEmail)(),
-    __metadata("design:type", String)
-], RegisterDto.prototype, "email", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MinLength)(6),
-    __metadata("design:type", String)
-], RegisterDto.prototype, "passwordHash", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({
-        example: 'São Paulo',
-    }),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], RegisterDto.prototype, "city", void 0);
-//# sourceMappingURL=register.dto.js.map
+    __metadata("design:type", Boolean)
+], TokenStatusDto.prototype, "blacklisted", void 0);
+//# sourceMappingURL=token-response.dto.js.map

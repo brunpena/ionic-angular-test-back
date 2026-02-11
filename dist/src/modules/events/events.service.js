@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventsService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../../prisma/prisma.service");
+const client_1 = require("@prisma/client");
 let EventsService = class EventsService {
     prisma;
     constructor(prisma) {
@@ -84,8 +85,11 @@ let EventsService = class EventsService {
             });
             return { message: 'Subscribed successfully' };
         }
-        catch {
-            throw new common_1.BadRequestException('Already subscribed');
+        catch (error) {
+            if (error instanceof client_1.Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+                throw new common_1.BadRequestException('Already subscribed');
+            }
+            throw error;
         }
     }
     async getUserEvents(userId) {

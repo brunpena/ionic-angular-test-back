@@ -3,9 +3,9 @@ import { IsString, IsNotEmpty } from 'class-validator';
 export class CreateSubscriptionDto {
   @IsString()
   @IsNotEmpty()
-  userId!: string;
+  userId: string;
 
   @IsString()
   @IsNotEmpty()
-  eventId!: string;
+  eventId: string;
 }

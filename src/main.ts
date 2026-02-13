@@ -30,10 +30,11 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:8100',
-      'https://ionic-angular-test-3b828.firebaseapp.com/',
+      'http://localhost:4200',
+      'https://ionic-angular-test-3b828.firebaseapp.com',
+      'https://ionic-angular-test-3b828.web.app',
     ],
     credentials: true,
-    methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
   });
 
   // 📚 Swagger

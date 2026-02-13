@@ -30,7 +30,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:8100',
-      'https://seusite.com',
+      'https://ionic-angular-test-3b828.firebaseapp.com/',
     ],
     credentials: true,
     methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],

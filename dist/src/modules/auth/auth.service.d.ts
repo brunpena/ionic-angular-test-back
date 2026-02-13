@@ -11,11 +11,11 @@ export declare class AuthService {
     register(dto: RegisterDto): Promise<{
         token: string;
         user: {
+            id: string;
             email: string;
             name: string;
-            city: string;
-            id: string;
             passwordHash: string;
+            city: string;
             role: import(".prisma/client").$Enums.UserRole;
             createdAt: Date;
             updatedAt: Date;
@@ -24,11 +24,11 @@ export declare class AuthService {
     login(dto: LoginDto): Promise<{
         token: string;
         user: {
+            id: string;
             email: string;
             name: string;
-            city: string;
-            id: string;
             passwordHash: string;
+            city: string;
             role: import(".prisma/client").$Enums.UserRole;
             createdAt: Date;
             updatedAt: Date;

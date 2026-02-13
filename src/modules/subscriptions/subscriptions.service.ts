@@ -42,6 +42,24 @@ export class SubscriptionsService {
     return sub;
   }
 
+  async getPastSubscriptions(userId: string) {
+    return this.prisma.subscription.findMany({
+      where: {
+        userId,
+        cancelledAt: { not: null },
+      },
+      include: {
+        event: {
+          include: {
+            subscriptions: {
+              where: { status: 'ACTIVE' },
+            },
+          },
+        },
+      },
+    });
+  }
+
   // ============================================
   // CREATE
   // ============================================

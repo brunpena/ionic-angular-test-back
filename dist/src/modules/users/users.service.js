@@ -18,7 +18,15 @@ let UsersService = class UsersService {
         this.prisma = prisma;
     }
     findById(id) {
-        return this.prisma.user.findUnique({ where: { id } });
+        return this.prisma.user.findUnique({
+            where: { id },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                city: true,
+            },
+        });
     }
     findByEmail(email) {
         return this.prisma.user.findUnique({

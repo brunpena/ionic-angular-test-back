@@ -17,15 +17,15 @@ export class UsersController {
 
   @Get('me')
   getMe(@Req() req) {
-    return this.usersService.findById(req.user.id)
+    console.log(req.user); 
+    return this.usersService.findById(req.user.userId);
   }
-
   @Patch('me')
   update(
     @Req() req,
     @Body() dto: UpdateUserDto
   ) {
-    return this.usersService.update(req.user.id, dto)
+    return this.usersService.update(req.user.userId, dto)
   }
 
   @Post()

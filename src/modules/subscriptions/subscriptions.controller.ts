@@ -14,6 +14,13 @@ export class SubscriptionsController {
     return this.subscriptionsService.getAllSubscriptions();
   }
 
+  // subscriptions.controller.ts
+  @Get('past')
+  getPast(@Req() req) {
+    return this.subscriptionsService.getPastSubscriptions(req.user.id);
+  }
+
+
   @Get('me')
   getMySubscriptions(@Req() req) {
     return this.subscriptionsService.getByUser(req.user.id);

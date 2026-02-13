@@ -26,6 +26,9 @@ let SubscriptionsController = class SubscriptionsController {
     async getAllSubscriptions() {
         return this.subscriptionsService.getAllSubscriptions();
     }
+    getPast(req) {
+        return this.subscriptionsService.getPastSubscriptions(req.user.id);
+    }
     getMySubscriptions(req) {
         return this.subscriptionsService.getByUser(req.user.id);
     }
@@ -49,6 +52,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SubscriptionsController.prototype, "getAllSubscriptions", null);
+__decorate([
+    (0, common_1.Get)('past'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], SubscriptionsController.prototype, "getPast", null);
 __decorate([
     (0, common_1.Get)('me'),
     __param(0, (0, common_1.Req)()),

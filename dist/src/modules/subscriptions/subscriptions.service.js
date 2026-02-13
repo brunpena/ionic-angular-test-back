@@ -38,6 +38,23 @@ let SubscriptionsService = class SubscriptionsService {
             throw new common_1.NotFoundException('Subscription not found');
         return sub;
     }
+    async getPastSubscriptions(userId) {
+        return this.prisma.subscription.findMany({
+            where: {
+                userId,
+                cancelledAt: { not: null },
+            },
+            include: {
+                event: {
+                    include: {
+                        subscriptions: {
+                            where: { status: 'ACTIVE' },
+                        },
+                    },
+                },
+            },
+        });
+    }
     async createSubscription(dto) {
         const event = await this.prisma.event.findUnique({
             where: { id: dto.eventId },

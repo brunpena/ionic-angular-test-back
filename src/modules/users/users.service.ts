@@ -7,7 +7,15 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   findById(id: string) {
-    return this.prisma.user.findUnique({ where: { id } })
+    return this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        city: true,
+      },
+    });
   }
 
   findByEmail(email: string) {

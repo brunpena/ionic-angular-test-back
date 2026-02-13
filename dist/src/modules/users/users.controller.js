@@ -25,10 +25,11 @@ let UsersController = class UsersController {
         this.usersService = usersService;
     }
     getMe(req) {
-        return this.usersService.findById(req.user.id);
+        console.log(req.user);
+        return this.usersService.findById(req.user.userId);
     }
     update(req, dto) {
-        return this.usersService.update(req.user.id, dto);
+        return this.usersService.update(req.user.userId, dto);
     }
     create(dto) {
         return this.usersService.create(dto);
